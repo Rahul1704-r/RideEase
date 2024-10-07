@@ -1,0 +1,71 @@
+INSERT INTO app_user ( name, email, password) VALUES
+( 'John Doe', 'john.doe@example.com', 'password1'),
+( 'Jane Smith', 'jane.smith@example.com', 'password2'),
+( 'Mike Johnson', 'mike.johnson@example.com', 'password3'),
+( 'Anna White', 'anna.white@example.com', 'password4'),
+( 'Peter Parker', 'peter.parker@example.com', 'password5'),
+( 'Clark Kent', 'clark.kent@example.com', 'password6'),
+( 'Bruce Wayne', 'bruce.wayne@example.com', 'password7'),
+( 'Diana Prince', 'diana.prince@example.com', 'password8'),
+( 'Steve Rogers', 'steve.rogers@example.com', 'password9'),
+( 'Natasha Romanoff', 'natasha.romanoff@example.com', 'password10'),
+( 'Tony Stark', 'tony.stark@example.com', 'password11'),
+( 'Bruce Banner', 'bruce.banner@example.com', 'password12'),
+( 'Thor Odinson', 'thor.odinson@example.com', 'password13'),
+( 'Loki Laufeyson', 'loki.laufeyson@example.com', 'password14'),
+( 'Wanda Maximoff', 'wanda.maximoff@example.com', 'password15'),
+( 'Vision', 'vision@example.com', 'password16'),
+( 'Sam Wilson', 'sam.wilson@example.com', 'password17'),
+( 'Bucky Barnes', 'bucky.barnes@example.com', 'password18'),
+( 'TChalla', 'tchalla@example.com', 'password19'),
+( 'Shuri', 'shuri@example.com', 'password20');
+
+INSERT INTO user_roles(user_id, roles) VALUES
+(1, 'RIDER'),
+(2, 'DRIVER'),
+(3, 'ADMIN'),
+(4, 'RIDER'),
+(5, 'DRIVER'),
+(6, 'ADMIN'),
+(7, 'RIDER'),
+(8, 'DRIVER'),
+(9, 'ADMIN'),
+(10, 'RIDER'),
+(11, 'DRIVER'),
+(12, 'ADMIN'),
+(13, 'RIDER'),
+(14, 'DRIVER'),
+(15, 'ADMIN'),
+(16, 'RIDER'),
+(17, 'DRIVER'),
+(18, 'ADMIN'),
+(19, 'RIDER'),
+(20, 'DRIVER');
+
+INSERT INTO rider(user_id,rating)VALUES(1,4.9);
+
+INSERT INTO driver ( user_id, rating, is_available, current_location) VALUES
+( 1, 4.8, true, ST_GeomFromText('POINT(77.105 28.7041)',4326)),
+( 2, 4.7, true, ST_GeomFromText('POINT(77.106 28.7051)',4326)),
+( 3, 4.9, true, ST_GeomFromText('POINT(77.107 28.7061)',4326)),
+( 4, 4.6, true, ST_GeomFromText('POINT(77.108 28.7071)',4326)),
+( 5, 4.7, true, ST_GeomFromText('POINT(77.109 28.7081)',4326)),
+( 6, 4.8, true, ST_GeomFromText('POINT(77.110 28.7091)',4326)),
+( 7, 4.9, true, ST_GeomFromText('POINT(77.111 28.7101)',4326)),
+( 8, 4.7, true, ST_GeomFromText('POINT(77.112 28.7111)',4326)),
+( 9, 4.8, true, ST_GeomFromText('POINT(77.113 28.7121)',4326)),
+(10, 4.9, true, ST_GeomFromText('POINT(77.114 28.7131)',4326)),
+(11, 4.6, true, ST_GeomFromText('POINT(77.115 28.7141)',4326)),
+(12, 4.7, true, ST_GeomFromText('POINT(77.116 28.7151)',4326)),
+(13, 4.8, true, ST_GeomFromText('POINT(77.117 28.7161)',4326)),
+(14, 4.9, true, ST_GeomFromText('POINT(77.118 28.7171)',4326)),
+(15, 4.7, true, ST_GeomFromText('POINT(77.119 28.7181)',4326)),
+(16, 4.8, true, ST_GeomFromText('POINT(77.120 28.7191)',4326)),
+(17, 4.9, true, ST_GeomFromText('POINT(77.121 28.7201)',4326)),
+(18, 4.6, true, ST_GeomFromText('POINT(77.122 28.7211)',4326)),
+(19, 4.7, true, ST_GeomFromText('POINT(77.123 28.7221)',4326)),
+(20, 4.8, true, ST_GeomFromText('POINT(77.124 28.7231)',4326));
+
+INSERT INTO wallet(user_id,balance)VALUES
+(1,100),
+(2,500);
