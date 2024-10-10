@@ -10,14 +10,12 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-//ST_DISTANCE() uses to calculate distance between 2 points
-//ST_DWithin()
-// drivers are "d"
+
 
 @Repository
 public interface DriverRepositories extends JpaRepository<Driver, Long> {
 
-    //Takes in the pickUpLocation and returns us the drivers
+   
     @Query(value = "SELECT d.*, ST_Distance(d.current_location , :pickUpLocation) AS distance " +
             "FROM driver  d " +
             "WHERE d.is_available=true AND ST_DWithin( d.current_location , :pickUpLocation , 10000) " +
