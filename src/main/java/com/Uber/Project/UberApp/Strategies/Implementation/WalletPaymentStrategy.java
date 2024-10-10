@@ -28,27 +28,20 @@ public class WalletPaymentStrategy  implements PaymentStrategy {
     @Override
     @Transactional
     public void processPayment(Payment payment) {
-        //fetch driver details
         Driver driver=payment.getRide().getDriver();
 
-        //fetch rider details
         Rider rider=payment.getRide().getRider();
 
-        //deduct Money From riderWallet
         walletService.deductMoneyFromWallet(rider.getUser(),
                 payment.getAmount(), null,payment.getRide(), TransactionMethod.RIDE);
 
-        //find the Driver's Cut from the Total Amount
         Double driverCut= payment.getAmount()*(1-PLATFORM_COMMISSION);
 
-        //Add that DriverCut to Driver's Wallet
         walletService.addMoneyToWallet(driver.getUser(),
                 driverCut,null,payment.getRide(),TransactionMethod.RIDE);
 
-        //update payment Status to CONFIRM
         payment.setPaymentStatus(PaymentStatus.CONFIRMED);
 
-        //Save the payment details
         paymentRepositories.save(payment);
 
     }
