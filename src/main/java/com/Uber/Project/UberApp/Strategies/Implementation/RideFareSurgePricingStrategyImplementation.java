@@ -12,7 +12,6 @@ public class RideFareSurgePricingStrategyImplementation implements RideFareCalcu
 
     private final DistanceService distanceService;
 
-    //we can call a weather api to calculate surge factor according to weather condition
     private static final  double SURGE_PRICE_FACTOR=2;
 
     @Override
