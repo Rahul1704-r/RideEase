@@ -20,9 +20,6 @@ public class Rider {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    /* means table rider will have a field called user_id and
-     user_id will be the foreign key of user
-     */
     private User user;
 
     private Double rating;
