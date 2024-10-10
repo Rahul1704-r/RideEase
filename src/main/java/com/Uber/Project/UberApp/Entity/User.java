@@ -33,7 +33,6 @@ public class User implements UserDetails {
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    // create another table for roles only
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
