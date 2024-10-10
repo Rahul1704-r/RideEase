@@ -1,9 +1,9 @@
 # RideEase 🚗📲
 
-RideEase is a ride-booking application that connects riders with drivers in real time. This backend-driven app allows users to request rides, manage payments, track ride progress, and more. Manages the whole lifecycle from when the rider requests a ride until the driver ends the ride and the payment process is completed. The project is built with Spring Boot and integrates with OSRM for map and routing services.
+RideEase is the backend service for a ride-booking application that connects riders with drivers in real time. This backend-driven app allows users to request rides, manage payments, track ride progress, and more. Manages the whole lifecycle from when the rider requests a ride until the driver ends the ride and the payment process is completed. The project is built with Spring Boot and integrates with OSRM for map and routing services.
 
 # Features
-  •	User Authentication: Secure user registration and login  
+  •	User Authentication: Secure user registration, login, and authorization.  
 	•	Ride Booking: Request and manage ride bookings.  
 	•	Real-Time Ride Tracking: Monitor ride status in real time.  
 	•	Payment Management: Integrated wallet system to handle ride payments.  
