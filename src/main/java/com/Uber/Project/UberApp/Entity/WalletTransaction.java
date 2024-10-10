@@ -31,12 +31,11 @@ public class WalletTransaction {
     private TransactionMethod transactionMethod;
 
     @ManyToOne
-    private Ride ride;//
+    private Ride ride;
 
     private String transactionId;
 
     @ManyToOne
-    // one wallet can have many transactions
     private Wallet wallet;
 
     @CreationTimestamp
