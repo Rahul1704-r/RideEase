@@ -20,23 +20,17 @@ public class CODPaymentStrategy implements PaymentStrategy {
 
     @Override
     public void processPayment(Payment payment) {
-        //fetch driver details
         Driver driver=payment.getRide().getDriver();
 
-        //fetch the driver's Wallet details
         Wallet driverWallet=walletService.findByUser(driver.getUser());
 
-        //Calculate the PlatformCommission
         double platformCommission= payment.getAmount()*PLATFORM_COMMISSION;
 
-        //deduct PlatformCommission From Driver's Wallet
         walletService.deductMoneyFromWallet(driver.getUser()
                 , platformCommission,null,payment.getRide(), TransactionMethod.RIDE);
 
-        //Update Payment Status to CONFIRM
         payment.setPaymentStatus(PaymentStatus.CONFIRMED);
 
-        //Save the Payment details
         paymentRepositories.save(payment);
     }
 }
