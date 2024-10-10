@@ -58,41 +58,19 @@ public class AuthenticationServiceImplementation implements AuthenticationServic
     }
 
     @Override
-    @Transactional /* now whole function is under transaction which means ,
-    this function will either execute everything or roll back */
-
+    @Transactional 
     public UserDTO SignUp(SignupDTO signupdto) {
-        // if the user with Particular email is found then we will throw this exception
+        
        User user = userRepositories.findByEmail(signupdto.getEmail()).orElse(null);
        if(user!=null){
            throw new RuntimeConflictException("cannot signup,User already exists");
        }
-
-       //map signupDTO to userEntity
         User mappeduser=modelMapper.map(signupdto,User.class);
-
-       //setting role to Rider because any time user signup he will be rider by default
         mappeduser.setRoles(Set.of(Role.RIDER));
-
-        //encode the password before saving in DATABASE
         mappeduser.setPassword(passwordEncoder.encode(mappeduser.getPassword()));
-
-        /* now repository will not save user directly
-        it will store it in a memory . when whole function is
-        executed without any problem then it will save
-        that why use transaction to avoid inconsistency
-         */
-
         User savedUser=userRepositories.save(mappeduser);
-
-        //create user related entities
-        // not create rider repository again coz we have rider Service
         riderService.createNewRider(savedUser);
-
-        //create user Wallet
         walletService.createNewWallet(savedUser);
-
-        //convert savedUser to userDTO and return
         return modelMapper.map(savedUser,UserDTO.class);
     }
 
