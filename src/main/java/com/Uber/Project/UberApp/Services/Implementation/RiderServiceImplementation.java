@@ -39,65 +39,47 @@ public class RiderServiceImplementation implements RiderService {
     @Override
     public RideRequestDTO requestRide(RideRequestDTO rideRequestDTO) {
 
-        //just for now later will remove
         Rider rider = getCurrentRider();
 
-        //took rideRequestDTO and converted into rideRequestEntity
         RideRequest rideRequest = modelMapper.map(rideRequestDTO, RideRequest.class);
 
-        //setRideRequestStatus to PENDING
         rideRequest.setRideRequestStatus(RideStatus.PENDING);
 
-        //get the role
         rideRequest.setRider(rider);
 
-        /*will calculate Fare for this we used one of the Strategy,
-        we are passing whole rideRequest because while calculating fare
-         we required pickup and drop off location to get distance
-         */
+    
         Double fare=rideStrategyManager.rideFareCalculationStrategy().calculateFare(rideRequest);
 
-        //set the fare in my rideRequest Fare
         rideRequest.setFare(fare);
 
-        //then save the rideRequest inside my dataBase
         RideRequest saveRideRequest=rideRequestRepositories.save(rideRequest);
 
-        // will broadcast message to driver its there will to accept or not
         List<Driver> drivers = rideStrategyManager
                 .getDriverMatchingStrategy(rider.getRating()).findMatchingDriver(rideRequest);
 
         // TODO-send notification to all the driver about this ride request
 
-        //return rideRequestDTO
         return modelMapper.map(saveRideRequest, RideRequestDTO.class);
     }
 
     @Override
     public RideDTO cancelRide(Long rideId) {
-        //get the current rider
         Rider rider=getCurrentRider();
 
-        //fetch the ride details
         Ride ride=rideService.getRideById(rideId);
 
-        //check if the rider is the person who is cancelling the ride
         if(!rider.equals(ride.getRider())){
             throw new RuntimeException("");
         }
 
-        //ride can only be cancelled only if ride is confirmed
         if(!ride.getRideRequestStatus().equals(RideStatus.CONFIRMED)){
             throw new RuntimeException("");
         }
 
-        //update the ride status to cancelled and save it
         Ride savedRide=rideService.UpdateRideStatus(ride,RideStatus.CANCELLED);
 
-        //update driver availability to true
         driverService.updateDriverAvailability(ride.getDriver(),true);
 
-        //convert savedRideEntity to rideDTO and return
         return modelMapper.map(savedRide,RideDTO.class);
     }
 
@@ -112,7 +94,6 @@ public class RiderServiceImplementation implements RiderService {
             throw new RuntimeException("Rider is Not the Owner Of this Ride ");
         }
 
-        //check if rideRequest status is ONGOING
         if(!ride.getRideRequestStatus().equals(RideStatus.ENDED)){
             throw new RuntimeException("Ride Status is not ENDED hence cannot Start Rating"+" "+ride.getRideRequestStatus());
         }
@@ -122,10 +103,8 @@ public class RiderServiceImplementation implements RiderService {
 
     @Override
     public RiderDTO getMyProfile() {
-        // fetch currentRider details
         Rider currentRider=getCurrentRider();
 
-        // convert currentRider to rideDTO and return
         return modelMapper.map(currentRider,RiderDTO.class);
     }
 
