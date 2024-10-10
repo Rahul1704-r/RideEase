@@ -27,7 +27,6 @@ public class RideServiceImplementation implements RideService {
 
     @Override
     public Ride getRideById(Long rideId) {
-        //fetch Ride details from the dataBase through query
         return rideRepositories.findById(rideId).orElseThrow(()->
                 new ResourceNotFoundException("Ride Not Found With Id"+rideId));
 
@@ -36,38 +35,28 @@ public class RideServiceImplementation implements RideService {
 
     @Override
     public Ride createNewRide(RideRequest rideRequest, Driver driver) {
-        //set rideRequest status to CONFIRMED
         rideRequest.setRideRequestStatus(RideStatus.CONFIRMED);
-
-        //convert RideDTO to RideEntity
+        
         Ride ride= modelMapper.map(rideRequest,Ride.class);
-
-        //set the rideStatus to CONFIRM
+        
         ride.setRideRequestStatus(RideStatus.CONFIRMED);
-
-        // set the driver
+        
         ride.setDriver(driver);
-
-        //GENERATE OTP using generateRandomOtp method
+        
         ride.setOtp(generateRandomOtp());
-
-
+        
         ride.setId(null);
-
-        // update the rideRequest as we have updated the ride status of rideRequest/save's it
+        
         rideRequestService.update(rideRequest);
-
-        //return saved RideEntity
-         return rideRepositories.save(ride);
+        
+        return rideRepositories.save(ride);
 
     }
 
     @Override
     public Ride UpdateRideStatus(Ride ride, RideStatus rideStatus) {
-        //update ride request status based on the parameters
         ride.setRideRequestStatus(rideStatus);
 
-        //return the saved ride
         return rideRepositories.save(ride);
 
     }
@@ -84,10 +73,8 @@ public class RideServiceImplementation implements RideService {
 
     private String generateRandomOtp(){
         Random random = new Random();
-        //return number between 0-9999
         int otpInt=random.nextInt(10000);
 
-        // will convert 3digit-2digit-1digit to 4digit
         return String.format("%04d",otpInt);
     }
 }
