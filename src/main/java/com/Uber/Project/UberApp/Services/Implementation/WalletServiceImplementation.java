@@ -28,13 +28,10 @@ public class WalletServiceImplementation implements WalletService {
 
     @Override
     public Wallet addMoneyToWallet(User user, Double amount, String transactionId, Ride ride, TransactionMethod transactionMethod) {
-        //Find Wallet by User
         Wallet wallet=findByUser(user);
 
-        //add Money to the User's Wallet
         wallet.setBalance(wallet.getBalance()+amount);
 
-        //Build transaction object and populate them
         WalletTransaction walletTransaction= WalletTransaction.builder()
                 .transactionId(transactionId)
                 .ride(ride)
@@ -44,10 +41,8 @@ public class WalletServiceImplementation implements WalletService {
                 .amount(amount)
                 .build();
 
-        // Create New Wallet Transaction
         walletTransactionService.createNewWalletTransaction(walletTransaction);
 
-        //Save the Wallet details
         return walletRepository.save(wallet);
 
 
@@ -57,13 +52,10 @@ public class WalletServiceImplementation implements WalletService {
     @Transactional
     public Wallet deductMoneyFromWallet(User user, Double amount, String transactionId,
                                         Ride ride, TransactionMethod transactionMethod) {
-        //Find Wallet By USER
         Wallet wallet=findByUser(user);
 
-        //Deduct Money From Wallet
         wallet.setBalance(wallet.getBalance()-amount);
 
-        //Build WalletTransaction and Populate the field
         WalletTransaction walletTransaction= WalletTransaction.builder()
                 .transactionId(transactionId)
                 .ride(ride)
@@ -73,11 +65,9 @@ public class WalletServiceImplementation implements WalletService {
                 .amount(amount)
                 .build();
 
-        //walletTransactionService.createNewWalletTransaction(walletTransaction);
 
         wallet.getTransactions().add(walletTransaction);
 
-        //Save Wallet Details
         return walletRepository.save(wallet);
     }
 
@@ -88,26 +78,21 @@ public class WalletServiceImplementation implements WalletService {
 
     @Override
     public Wallet findWalletById(Long walletId) {
-        //Find Wallet By WalletId
         return walletRepository.findById(walletId).orElseThrow(()->
                 new ResourceNotFoundException("Wallet Not Found with Id :"+walletId));
     }
 
     @Override
     public Wallet createNewWallet(User user) {
-        //Create New Wallet Object
         Wallet wallet =new Wallet();
 
-        //set the User
         wallet.setUser(user);
 
-        //Save Wallet Details
         return walletRepository.save(wallet);
     }
 
     @Override
     public Wallet findByUser(User user) {
-        //Find Wallet By User
         return walletRepository.findByUser(user).orElseThrow(()->
                 new ResourceNotFoundException("Wallet Not Found with UserId : "+user.getId()));
     }
