@@ -35,13 +35,9 @@ public class Ride {
     private Point DropOffLocation;
 
     @CreationTimestamp
-    /*will automatically fill the requested Time
-    so u don't have to this*/
     private LocalDateTime CreatedTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    /* one rider can have multiple
-    Ride request*/
     private Driver driver;
 
 
