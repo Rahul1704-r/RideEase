@@ -19,9 +19,7 @@ public class Driver {
     private Long id;
 
 
-    /* means table rider will have a field called user_id and
-     user_id will be the foreign key of user
-     */
+    
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -33,8 +31,5 @@ public class Driver {
     private String VehicleId;
 
     @Column(columnDefinition = "Geometry(Point,4326)")
-    /* "Geometry(Point,4326)" - Type Geometry Point 4326
-    4326 is for dealing with Earth geometry
-     */
     private Point currentLocation;
 }
